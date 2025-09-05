@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import axios from 'axios'
+import { SignIn, UserButton } from '@stackframe/stack'
 
 interface Car {
   brand: string;
@@ -37,6 +38,11 @@ export default function Home() {
       <input type="text" placeholder="Enter Brand..." value={data.brand} onChange={(e) => setData((prev) => ({ ...prev, brand: e.target.value }))} />
       <input type="text" placeholder="Enter Model..." value={data.model} onChange={(e) => setData((prev) => ({ ...prev, model: e.target.value }))} />
       <button onClick={submit}>Submit</button>
+      {/* If signed out → show SignIn */}
+      <SignIn />
+
+      {/* If signed in → show UserButton (avatar, logout, profile menu) */}
+      <UserButton />
     </div>
   );
 }
