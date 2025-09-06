@@ -1,9 +1,24 @@
 'use client'
 
-import { SignIn } from '@stackframe/stack'
+import { SignIn, useUser } from '@stackframe/stack'
 import Image from 'next/image';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
+
+  const router = useRouter();
+  const user = useUser();
+
+  const checkUser = async () => {
+    if (user) {
+      router.push('/home');
+    }
+  }
+
+  useEffect(() => {
+    checkUser();
+  }, [user]);
 
   return (
     <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 p-4 min-h-screen'>
