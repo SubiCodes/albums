@@ -12,9 +12,6 @@ export default function Home() {
       <div className='flex flex-col items-center justify-center border'>
         {/* If signed out → show SignIn */}
         <SignIn />
-
-        {/* If signed in → show UserButton (avatar, logout, profile menu) */}
-        <UserButton />
       </div>
     </div>
   );
