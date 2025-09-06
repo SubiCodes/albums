@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div>
       {/* If signed out → show SignIn */}
-      <SignIn />
+      <SignIn/>
 
       {/* If signed in → show UserButton (avatar, logout, profile menu) */}
       <UserButton />
