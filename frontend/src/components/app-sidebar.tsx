@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings, LogOut } from "lucide-react"
+import { User, Home, SunMoon, LogOut } from "lucide-react"
 
 import {
   Sidebar,
@@ -21,24 +21,9 @@ const items = [
     icon: Home,
   },
   {
-    title: "Inbox",
+    title: "Profile",
     url: "#",
-    icon: Inbox,
-  },
-  {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
+    icon: User,
   },
 ]
 
@@ -76,6 +61,17 @@ export function AppSidebar() {
                 </SidebarMenuItem>
               ))}
 
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center gap-2 w-full text-left"
+                  >
+                    <SunMoon />
+                    <span>Change Theme</span>
+                  </button>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
               {/* Logout button */}
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
