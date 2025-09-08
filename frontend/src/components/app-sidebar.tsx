@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/sidebar"
 import { useUser } from "@stackframe/stack";
 import { useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
 
 // Menu items.
 const items = [
@@ -29,6 +30,7 @@ const items = [
 
 export function AppSidebar() {
 
+  const { theme, setTheme } = useTheme();
   const router = useRouter();
   const user = useUser();
 
@@ -40,6 +42,10 @@ export function AppSidebar() {
       console.error("Logout failed:", err);
     }
   };
+
+  const handleChangeTheme = () => {
+    theme === 'light' ? setTheme('dark') : setTheme('light');
+  };  
 
   return (
     <Sidebar>
@@ -64,7 +70,7 @@ export function AppSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <button
-                    onClick={handleLogout}
+                    onClick={handleChangeTheme}
                     className="flex items-center gap-2 w-full text-left"
                   >
                     <SunMoon />
