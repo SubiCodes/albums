@@ -13,6 +13,8 @@ import {
 import { useUser } from "@stackframe/stack";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
+import LogoutDialog from "./logout-dialog";
+import { useState } from "react";
 
 // Menu items.
 const items = [
@@ -33,6 +35,7 @@ export function AppSidebar() {
   const { theme, setTheme } = useTheme();
   const router = useRouter();
   const user = useUser();
+  const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState<boolean>(false);
 
   const handleLogout = async () => {
     try {
@@ -45,55 +48,58 @@ export function AppSidebar() {
 
   const handleChangeTheme = () => {
     theme === 'light' ? setTheme('dark') : setTheme('light');
-  };  
+  };
 
   return (
-    <Sidebar>
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel className="text-pink-400 italic font-bold text-2xl mb-4">
-            Albums
-          </SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
+    <>
+      <Sidebar>
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupLabel className="text-pink-400 italic font-bold text-2xl mb-4">
+              Albums
+            </SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {items.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild>
+                      <a href={item.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+
+                <SidebarMenuItem>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
+                    <button
+                      onClick={handleChangeTheme}
+                      className="flex items-center gap-2 w-full text-left"
+                    >
+                      <SunMoon />
+                      <span>Change Theme</span>
+                    </button>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-              ))}
-
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <button
-                    onClick={handleChangeTheme}
-                    className="flex items-center gap-2 w-full text-left"
-                  >
-                    <SunMoon />
-                    <span>Change Theme</span>
-                  </button>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              {/* Logout button */}
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <button
-                    onClick={handleLogout}
-                    className="flex items-center gap-2 w-full text-left"
-                  >
-                    <LogOut />
-                    <span>Logout</span>
-                  </button>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-    </Sidebar>
+                {/* Logout button */}
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <button
+                      onClick={() => setIsLogoutDialogOpen(true)}
+                      className="flex items-center gap-2 w-full text-left"
+                    >
+                      <LogOut />
+                      <span>Logout</span>
+                    </button>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+      </Sidebar>
+      <LogoutDialog open={isLogoutDialogOpen} onOpenChange={setIsLogoutDialogOpen} logout={handleLogout} />
+    </>
   )
 }
