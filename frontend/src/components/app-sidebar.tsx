@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
+import { Calendar, Home, Inbox, Search, Settings, LogOut } from "lucide-react"
 
 import {
   Sidebar,
@@ -10,12 +10,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { useUser } from "@stackframe/stack";
+import { useRouter } from "next/navigation";
 
 // Menu items.
 const items = [
   {
     title: "Home",
-    url: "#",
+    url: "/home",
     icon: Home,
   },
   {
@@ -41,11 +43,26 @@ const items = [
 ]
 
 export function AppSidebar() {
+
+  const router = useRouter();
+  const user = useUser();
+
+  const handleLogout = async () => {
+    try {
+      await user?.signOut();
+      router.replace('/');
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
+  };
+
   return (
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-pink-400 italic font-bold text-2xl mb-4">
+            Albums
+          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
@@ -58,6 +75,19 @@ export function AppSidebar() {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
+
+              {/* Logout button */}
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center gap-2 w-full text-left"
+                  >
+                    <LogOut />
+                    <span>Logout</span>
+                  </button>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

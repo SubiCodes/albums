@@ -21,7 +21,7 @@ export default function Home() {
   }, [user]);
 
   return (
-    <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 p-4 min-h-screen'>
+    <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 p-4 min-h-screen min-w-screen'>
       <div className='flex flex-1 flex-col items-center justify-center gap-12'>
         <h1 className='text-4xl text-pink-400 font-bold italic'>Welcome to Albums!</h1>
         <Image
