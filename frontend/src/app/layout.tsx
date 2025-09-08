@@ -3,6 +3,8 @@ import { StackProvider, StackTheme } from "@stackframe/stack";
 import { stackServerApp } from "../stack";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/app-sidebar"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,10 +27,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}><StackProvider app={stackServerApp}><StackTheme>
-        {children}
-      </StackTheme></StackProvider></body>
-    </html>
+    <SidebarProvider>
+      <AppSidebar />
+      <html lang="en">
+        <body className={`${geistSans.variable} ${geistMono.variable}`}><StackProvider app={stackServerApp}><StackTheme>
+          <SidebarTrigger />
+          {children}
+        </StackTheme></StackProvider></body>
+      </html>
+    </SidebarProvider>
   );
 }
